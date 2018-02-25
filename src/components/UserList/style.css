@@ -1,0 +1,64 @@
+.user-list__wrapper{
+    position: relative;
+    overflow: hidden;
+    width: 33%; 
+    height: 725px;
+    background: #444753;
+    padding: 20px 30px;
+    margin: 0;
+    color: #fff;
+    border-radius: 5px 0 0 5px;
+}
+
+.user-list{
+    position: absolute;
+    left: 30px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.user-list::-webkit-scrollbar {
+    display: none;
+}
+.user-list__users{
+    width: 270px; 
+    height: 600px;
+    list-style: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.user-list__user{
+    display: flex;
+    align-items: center;
+}
+
+.user-list__avatar{
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #92959E;
+    margin: 0 10px 10px 0;
+}
+
+.user-list__about{
+
+}
+.user-list__status{
+    font-size: .8em;
+    font-weight: 200;
+}
+.user-list__status span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.online{
+    background-color: #86BB71;
+}
+
+.offline{
+    background-color:#E38968
+}

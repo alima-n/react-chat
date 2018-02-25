@@ -1,0 +1,5 @@
+export const AUTH_USER_SET = 'AUTH_USER_SET'
+export const USERS_SET = 'USERS_SET'
+export const MESSAGES_SET = 'MESSAGES_SET'
+export const PRIVATE_MESSAGES_SET = 'PRIVATE_MESSAGES_SET'
+export const CREATE_MESSAGE = 'CREATE_MESSAGE'

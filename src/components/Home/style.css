@@ -1,0 +1,11 @@
+*{
+    box-sizing: border-box;
+}
+.home {
+    display: flex;
+    justify-content: center;
+}
+.chat {
+    height: 715px;
+    width: 67%;
+}
