@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { storage } from '../firebase'
 
 class Image extends Component {
@@ -9,9 +8,9 @@ class Image extends Component {
     }
 
     setStateAsync = state =>
-      new Promise(resolve => 
-        this.setState(state, resolve)
-      )
+        new Promise(resolve => 
+            this.setState(state, resolve)
+        )
     
     async componentDidMount() {
         const {uri} = this.props
@@ -25,11 +24,11 @@ class Image extends Component {
 
     render() {
         const src = this.state.url
-        const {className, alt} = this.props
+        const { className, alt } = this.props
         return (
             <div>
                 <a target="blank" href={src}>
-                    <img className={className} src={src} alt={'Image from ' + alt} />
+                    <img className={className} src={src} alt={'Картинка от ' + alt} />
                 </a>
             </div>
         )

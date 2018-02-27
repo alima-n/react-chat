@@ -5,7 +5,7 @@ import { SignUpLink } from './SignUp'
 import { PasswordForgetLink } from './PasswordForget'
 import { auth, db } from '../firebase'
 import * as routes from '../constants/routes'
-import getValueByProp from '../utils/getValueByProp'
+import { getValueByProp } from '../utils/'
 
 
 const SignInPage = ({ history }) =>

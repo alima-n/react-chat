@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { auth } from '../firebase'
-import getValueByProp from '../utils/getValueByProp'
+import { getValueByProp } from '../utils/'
 
 const INITIAL_STATE = {
 	passwordOne: '',
@@ -24,9 +24,9 @@ class PasswordChangeForm extends Component {
 		})
 		.catch(error => {
 			this.setState(getValueByProp('error', error))
-		});
+		})
 
-		event.preventDefault();
+		event.preventDefault()
 	}
 
 	render() {
@@ -44,7 +44,7 @@ class PasswordChangeForm extends Component {
 					value={passwordOne}
 					onChange={event => this.setState(getValueByProp('passwordOne', event.target.value))}
 					type="password"
-					placeholder="New Password"
+					placeholder="Новый пароль"
 					pattern="^[a-zA-Z0-9]{4,}"
                     required
 				/>
@@ -52,11 +52,11 @@ class PasswordChangeForm extends Component {
 					value={passwordTwo}
 					onChange={event => this.setState(getValueByProp('passwordTwo', event.target.value))}
 					type="password"
-					placeholder="Confirm New Password"
+					placeholder="Повторите новый пароль"
 					required
 				/>
 				<button disabled={isInvalid} type="submit">
-					Reset My Password
+					Сбросить текущий пароль
 				</button>
 
 				{ error && <p>{error.message}</p> }

@@ -11,8 +11,9 @@ import './style.css'
 
 const INITIAL_STATE = {
 	isPrivate: false,
-	recipient: '',
-	recipientUsername: ''
+	repicient: '',
+	recipientUsername: '',
+	chatName: ''
 }
 
 class HomePage extends Component {
@@ -21,46 +22,39 @@ class HomePage extends Component {
 
 	render() {
 		const { authUser } = this.props
-		const { isPrivate, repicientUid, RepicientUsername, chatName } = this.state
+		const { isPrivate } = this.state
 
-		console.log('---- rerendering Home page ', this.state)
 		return (
 			<div>
 				<div className="home">
-					<UserList user={authUser} onClick ={this.handleUserlistClick}/>
+					<UserList user={authUser} onClick={this.handleUserlistClick}/>
 					<div className="chat">
-						{isPrivate ? <PrivateMessageList user={authUser} recipient={repicientUid} chatName={chatName} /> : <MessageList user={authUser} />}
-						<MessageForm 
-							user={authUser} 
-							isPrivate={isPrivate} 
-							recipient={repicientUid}
-							chatName={chatName}
-						/>
+						{isPrivate ? <PrivateMessageList user={authUser} {...this.state} onClick={this.handleChatClick} /> : 
+						<MessageList user={authUser} />}
+						<MessageForm user={authUser} {...this.state}/>
 					</div>
 				</div>
 			</div>
 		)
 	}
 
-	handleUserlistClick = (repicientUid, RepicientUsername, userUid) => {
-		const chatName = repicientUid > userUid ? 
-						 repicientUid + '_' + userUid : 
-						 userUid + '_' + repicientUid
-
+	handleUserlistClick = (repicient, recipientUsername, userUid) => {
+		const chatName = getChatName(repicient, userUid)
 		this.setState({
 			isPrivate: true,
-			repicientUid,
-			RepicientUsername,
+			repicient,
+			recipientUsername,
 			chatName
 		})
 	}
 
 	handleChatClick = () => {
 		this.setState({ ...INITIAL_STATE })
-		console.log("CLICK")
 	}
 }
 
+const getChatName = (id1, id2) =>
+	id1 > id2 ? `${id1}_${id2}` : `${id2}_${id1}`
 
 const mapStateToProps = (state) => ({
 	authUser: state.sessionState.authUser,

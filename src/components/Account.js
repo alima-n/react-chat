@@ -8,7 +8,7 @@ import withAuthorization from './withAuthorization'
 
 const AccountPage = ({ authUser }) =>
     <div>
-		<h4>You are logged in as {authUser.displayName || authUser.email}</h4>
+		<h4>Вы зачем-то зашли сюда, {authUser.displayName || authUser.email}</h4>
 		<PasswordForgetForm />
 		<PasswordChangeForm />
     </div>

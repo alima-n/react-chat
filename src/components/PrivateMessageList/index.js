@@ -2,64 +2,55 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { PRIVATE_MESSAGES_SET } from '../../constants/AC'
-import {db} from '../../firebase'
-import Image from '../Image'
+import { db } from '../../firebase'
+import { Message } from '../Message'
+import { checkBottomPos, scrollBottom } from '../../utils/'
+import * as events from '../../constants/events'
 
 class PrivateMessageList extends Component {
-
-    componentDidMount() {
-        const {user, recipient, onSetPrivateMessages, chatName } = this.props
-        const events = ['child_added', 'child_changed', 'child_removed']
-        console.log('COMPONENT DID MOUNT')
-        events.map(event => db.doAddListenerToPrivateMessages(event, onSetPrivateMessages))	 
-    }
     
+    componentDidMount() {
+        const { onSetPrivateMessages } = this.props
+        Object.keys(events).map(key => db.doAddListenerToRef(db.privateMessagesQuery, events[key], onSetPrivateMessages))	 
+
+        this.chat.addEventListener('click', this.handleChatClick)
+    }
+
+    componentWillUpdate() {
+		this.shouldScrollBottom = checkBottomPos(this.messages)
+	}
+
+	componentDidUpdate() {
+		return this.shouldScrollBottom ? scrollBottom(this.messages) : null
+	}
+
     render() {
-        const {user, recipient, privateMessages, chatName } = this.props
-        console.log('Private MessageList PROPS: ', this.props)
+        const {recipientUsername, privateMessages, chatName } = this.props
         return (
             <div className="message-list__wrapper" ref={chat => this.chat = chat} >
-                <h2>Приватная беседа с {recipient}</h2>
+                <h3>Приватная беседа с {recipientUsername}</h3>
+                <span className="message-list__back-to-public"> &#8592; В общий чат </span>
                 <div className="message-list" ref={messages => this.messages = messages}>
                     <ul className="message-list__messages" >	
-                        {privateMessages[chatName] ? this.getPrivateMessages(user, recipient, privateMessages[chatName]) : null }      
+                        {privateMessages[chatName] ? this.getPrivateMessages(privateMessages[chatName]) : null }      
                     </ul>
                 </div>	
             </div>
         ) 
     }
 
-    getPrivateMessages = (user, recipient, privateMessages) => {
+    handleChatClick = (event) => 
+        event.target.classList.contains('message-list__back-to-public') ? this.props.onClick() : null
+
+    getPrivateMessages = (privateMessages) => {
 		return (
 			Object.keys(privateMessages).map(key =>
 				<li key={key}>
-                    <div className={this.getClassName(privateMessages[key].senderUid)}>
-                        <span className="message-list__time">{this.getTime(privateMessages[key].time)}</span>
-                        <div className="message-list__message">
-                            {privateMessages[key].text}
-                            {privateMessages[key].fileURI ? 
-                            <Image uri = {privateMessages[key].fileURI} className="message-list__img" alt={privateMessages[key].username} /> : 
-                            null}
-                        </div>
-                    </div>
+                    <Message message={privateMessages[key]} user={this.props.user} />
 				</li>
 			)
 		)
-    }   
-    
-    getTime = (timestamp) => {
-		const time = new Date(timestamp)
-		const hours = time.getHours()
-		const minutes = time.getMinutes()
-
-		return `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`
     }
-
-    getClassName = (uid) => {
-		const authUid = this.props.user.uid
-
-		return uid === authUid ? 'is-mine' : null
-	}
 
 }
 
