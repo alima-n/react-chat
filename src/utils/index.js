@@ -1,4 +1,4 @@
-export const getTime = (timestamp) => {
+export const getTime = timestamp => {
     const time = new Date(timestamp)
     const hours = time.getHours()
     const minutes = time.getMinutes()
@@ -7,10 +7,10 @@ export const getTime = (timestamp) => {
 }
 
 
-export const checkBottomPos = (el) => 
+export const checkBottomPos = el => 
     el.scrollTop + el.offsetHeight === el.scrollHeight
 
-export const scrollBottom = (el) => 
+export const scrollBottom = el => 
     el.scrollTop = el.scrollHeight 
 
 
@@ -41,6 +41,10 @@ export const getUserStatusText = (user) => {
     }
 }
 
-export const getUserStatusClass = (user) => {
+export const getUserStatusClass = user => {
     return user.connections ? 'online' : 'offline'
+}
+
+export const isValidForm = (fields, validationFn) => {
+    return fields.some(validationFn)
 }

@@ -1,8 +1,9 @@
 .chat form{
-  padding: 30px;
+  padding: 15px 30px 30px;
   background: #F2F5F8;
   color: #434651;
   height: 175px;
+  border-top: #fff solid 2px;
 }
 .chat form::after {
   visibility: hidden;
@@ -51,7 +52,7 @@
 }
 .submit-btn{
 	float: right;
-  color: #94C2ED;
+  color: #75b1e8;
   font-size: 16px;
   text-transform: uppercase;
   border: none;
@@ -62,8 +63,8 @@
 .submit-btn:focus{
   outline: 1px solid #75b1e8;
 }
-.submit-btn:hover{
-	color: #75b1e8;
+.submit-btn:disabled{
+	color: #94C2ED;
 }
 
 .emoji-container{
@@ -176,7 +177,7 @@
   padding: 0 6px;
 }
 .emoji-mart-search input {
-  font-size: 16px;
+  font-size: 14px;
   display: block;
   width: 100%;
   padding: .2em .6em;
@@ -208,6 +209,7 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  font-size: 14px;
 }
 
 .emoji-mart-category-label span {

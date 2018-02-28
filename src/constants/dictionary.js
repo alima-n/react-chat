@@ -4,7 +4,7 @@ export const ru = {
     categories: {
         search: 'Найдено',
         recent: 'Ваше любимое',
-        people: 'Люди',
+        people: 'Смайлы и люди',
         nature: 'Животные и природа',
         foods: 'Еда и напитки',
         activity: 'Активность',

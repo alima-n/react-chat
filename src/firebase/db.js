@@ -76,7 +76,27 @@ export const manageUserPresence = (uid) => {
 	})
 }
 
+export const userRef = (uid) =>
+	db.ref(`users/${uid}`)
 
-	
+export const doUpdateUserpic = async (uid, file) => {
+	const data = await db.ref(`users/${uid}`)
+	const snapshot = await storage.ref(`${uid}/photoURL/photoURL`).put(file)
+	const fileRef = await storage.refFromURL(storage.ref(snapshot.metadata.fullPath).toString())
+	const url = await fileRef.getMetadata()
+                .then(metadata => metadata.downloadURLs[0])
+
+	return data.update({
+		photoURL: url
+	})
+}
+
+export const doUpdateUsername = async (uid, name) => {
+	const data = await db.ref(`users/${uid}`)
+
+	return data.update({
+		username: name
+	})
+}
 
 	

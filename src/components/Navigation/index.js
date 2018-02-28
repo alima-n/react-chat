@@ -21,8 +21,8 @@ const NavigationAuth = () =>
 
 const NavigationNonAuth = () =>
     <ul className="menu-top">
-        <li><Link to={routes.LANDING}>Landing</Link></li>
-        <li><Link to={routes.SIGN_IN}>Sign In</Link></li>
+        <li><Link to={routes.LANDING}>Домой</Link></li>
+        <li><Link to={routes.SIGN_IN}>Войти</Link></li>
     </ul>
 
 const mapStateToProps = (state) => ({

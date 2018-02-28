@@ -1,0 +1,16 @@
+.change-userpic, .change-username{
+    display: block;
+    margin-bottom: 20px;
+}
+
+.change-userpic__userpic{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #92959E;
+}
+
+.change-userpic span, .change-username span {
+    margin: 0 10px;
+}
