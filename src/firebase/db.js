@@ -11,21 +11,25 @@ export const doCreateUser = (id, username, email, photoURL) =>
 export const onceGetUsers = () =>
   	db.ref('users').once('value')
 
-export const doCreateMessage = (ref, uid, text, emoji, time, username) => 
+export const doCreateMessage = (ref, uid, text, emoji, time, username, recipient = '') => 
 	ref.push({
 		uid,	
 		text,
 		emoji,
 		time,
-		username
+		username,
+		recipient
 	})
 
 export const messagesQuery = db.ref('messages').limitToLast(100)
-export const privateMessagesQuery = db.ref('privateMessages').limitToLast(100)
+export const privateMessagesQuery = chatName => db.ref(`privateMessages/${chatName}`).limitToLast(100)
 export const usersRef = db.ref('users').limitToLast(50)
 
-export const privateMessagesRef = chatName => 
-	db.ref(`privateMessages/${chatName}`)
+export const privateMessagesRef = (uid, recipient) => {
+	const chatName = uid > recipient ? uid+'_'+recipient : recipient+'_'+uid
+	return db.ref(`privateMessages/${chatName}`)
+}
+	
 
 export const messagesRef = () => 
 	db.ref('messages')

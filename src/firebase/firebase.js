@@ -17,9 +17,8 @@ const auth = firebase.auth()
 const db = firebase.database()
 const storage = firebase.storage()
 
-
 export {
   auth,
   db,
-  storage,
+  storage
 }

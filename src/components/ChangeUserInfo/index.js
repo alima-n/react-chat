@@ -59,8 +59,8 @@ class ChangeUserInfoForm extends Component {
     onSubmit = (event) => {
         event.preventDefault()
         const { user: {uid} } = this.props
-        this.state.file ? this.setPhotoURL(uid) : null
-        this.state.usernameInput ? this.setUsername(uid) : null
+        if(this.state.file) this.setPhotoURL(uid) 
+        if(this.state.usernameInput) this.setUsername(uid)
     }
 
     setPhotoURL = async (uid) => {

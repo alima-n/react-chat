@@ -41,7 +41,8 @@ class UserList extends Component {
 	handleUserClick = (event) => {
 		const userClasses = ['user-list__user', 'user-list__avatar', 'user-list__about', 'user-list__name', 'user-list__status']
 		const classList = event.target.classList
-		const {user} = this.props
+
+		const { user } = this.props
 		
 		if(userClasses.some( c => classList.contains(c) )) {
 			const data = event.target.closest('li').dataset

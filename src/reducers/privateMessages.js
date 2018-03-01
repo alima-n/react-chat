@@ -1,15 +1,12 @@
 import {PRIVATE_MESSAGES_SET} from '../constants/AC'
 
-const INITIAL_STATE = {
-    privateMessages: {},
-}
-  
-const applySetMessages = (state, action) => ({
+
+const applySetMessages = (state = {}, action) => ({
     ...state,
-    privateMessages: action.privateMessages
+    [action.chatName]: ({ ...state[action.chatName], ...action.privateMessages })
 })
   
-function privateMessageReducer(state = INITIAL_STATE, action) {
+function privateMessageReducer(state = {}, action) {
     switch(action.type) {
 
       case PRIVATE_MESSAGES_SET: {

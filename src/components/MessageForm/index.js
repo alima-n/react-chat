@@ -32,7 +32,7 @@ class MessageForm extends Component {
     render() {          
         return (
             <form onSubmit = {this.handleSubmit} ref={form => this.form = form}>
-                <textarea value={this.state.text} onChange={this.handleTextChange} className="textarea" rows="3" placeholder="Да пошли вы все" />
+                <textarea value={this.state.text} onChange={this.handleTextChange} className="textarea" rows="3" placeholder="Сообщение..." />
                 <label className="file-container"> 
                     <input type="file" onChange={this.handleFileChange} />
                 </label>
@@ -66,13 +66,14 @@ class MessageForm extends Component {
     }
 
     handleSubmit = event => {
-        const { user: {uid, displayName}, isPrivate, chatName } = this.props
-        const dbRef = isPrivate ? db.privateMessagesRef(chatName) : db.messagesRef()
+        const { user: {uid, displayName}, isPrivate, recipient } = this.props
+        console.log('PROPS in send form: ', this.props)
+        const dbRef = isPrivate ? db.privateMessagesRef(uid, recipient) : db.messagesRef()
         const time = Date.now()
 
         this.state.file ? 
-        db.doSaveFile(dbRef, uid, this.state.file, this.state.text, this.state.withEmoji, time, displayName) :  
-        db.doCreateMessage(dbRef, uid, this.state.text, this.state.withEmoji, time, displayName)
+        db.doSaveFile(dbRef, uid, this.state.file, this.state.text, this.state.withEmoji, time, displayName, recipient) :  
+        db.doCreateMessage(dbRef, uid, this.state.text, this.state.withEmoji, time, displayName, recipient)
 
         this.setState({ ...INITIAL_STATE })
         event.preventDefault()
