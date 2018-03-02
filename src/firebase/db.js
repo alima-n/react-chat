@@ -11,14 +11,15 @@ export const doCreateUser = (id, username, email, photoURL) =>
 export const onceGetUsers = () =>
   	db.ref('users').once('value')
 
-export const doCreateMessage = (ref, uid, text, emoji, time, username, recipient = '') => 
+export const doCreateMessage = (ref, uid, text, emoji, time, username, recipient = 'all') => 
 	ref.push({
 		uid,	
 		text,
 		emoji,
 		time,
 		username,
-		recipient
+		recipient,
+		read: false
 	})
 
 export const messagesQuery = db.ref('messages').limitToLast(100)
@@ -29,7 +30,6 @@ export const privateMessagesRef = (uid, recipient) => {
 	const chatName = uid > recipient ? uid+'_'+recipient : recipient+'_'+uid
 	return db.ref(`privateMessages/${chatName}`)
 }
-	
 
 export const messagesRef = () => 
 	db.ref('messages')
@@ -41,7 +41,8 @@ export const doSaveFile = async (ref, uid, fileURI, text, emoji, time, username)
 		text,
 		emoji,
 		time,
-		username
+		username,
+		read: false
 	})
 
 	const filePath = `${uid}/${fileURI.name}`
@@ -100,6 +101,14 @@ export const doUpdateUsername = async (uid, name) => {
 
 	return data.update({
 		username: name
+	})
+}
+
+export const doMarkMessageAsRead = async (chatName, key) => {
+	const data = await db.ref(`privateMessages/${chatName}/${key}`)
+
+	return data.update({
+		read: true
 	})
 }
 

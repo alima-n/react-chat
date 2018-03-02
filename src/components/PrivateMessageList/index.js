@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import { Message } from '../Message'
+import { db } from '../../firebase'
 import { checkBottomPos, scrollBottom } from '../../utils/'
 
 class PrivateMessageList extends Component {
@@ -19,7 +20,7 @@ class PrivateMessageList extends Component {
 
     render() {
         const { recipient, messages } = this.props
-      
+        
         return (
             <div className="message-list__wrapper" ref={chat => this.chat = chat} >
                 <h3>Приватная беседа с {recipient}</h3>
@@ -33,18 +34,23 @@ class PrivateMessageList extends Component {
         ) 
     }
 
-    handleChatClick = (event) => 
-        event.target.classList.contains('message-list__back-to-public') ? this.props.onClick() : null
-
     getPrivateMessages = (messages) => {
+        const { chatName } = this.props
 		return (
-			Object.keys(messages).map(key =>
-				<li key={key}>
-                    <Message message={messages[key]} user={this.props.user} />
-				</li>
+            Object.keys(messages).map(key => {
+                db.doMarkMessageAsRead(chatName, key)
+                    return (    
+                        <li key={key}>
+                            <Message message={messages[key]} user={this.props.user} />
+                        </li>
+                    )
+                } 
 			)
 		)
     }
+
+    handleChatClick = (event) => 
+        event.target.classList.contains('message-list__back-to-public') ? this.props.onClick() : null
 }
 
 export default PrivateMessageList

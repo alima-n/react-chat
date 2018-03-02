@@ -14,7 +14,6 @@ export const Message = (props) => {
     return (
         <div className={getClassName(message.uid)}>
             <div>
-                {console.log('Rendering message')}
                 <span>{message.username}</span>
                 <span className="message-list__time">{getTime(message.time)}</span>
             </div>

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 
 import { PasswordForgetForm } from '../PasswordForget'
-import PasswordChangeForm from '../PasswordChange'
 import ChangeUserInfoForm from '../ChangeUserInfo'
 import withAuthorization from '../withAuthorization'
 import './style.css'
