@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { auth } from '../firebase'
 
+
 const PasswordForgetPage = () =>
 	<div>
 		<h3>Борьба со склерозом</h3>
@@ -27,7 +28,6 @@ class PasswordForgetForm extends Component {
 		auth.doPasswordReset(email)
 		.then(() => {
 			this.setState({
-				email: '', 
 				error: null,
 				mailSent: true
 			})
@@ -46,26 +46,26 @@ class PasswordForgetForm extends Component {
 		const { error, mailSent } = this.state
 
 		return (
-			<form onSubmit={this.onSubmit}>
-				<input
-					value={this.state.email}
-					onChange={event => this.setState({ email: event.target.value })}
-					type="email"
-					placeholder="Email"
-					required
-				/>
-				<button type="submit">
-					Сменить пароль
-				</button>
-				{ mailSent && <p>Письмо для смены пароля отправлено</p> }
-				{ error && <p>{error.message}</p> }
-			</form>
+			<div className={this.props.className}>
+				<form onSubmit={this.onSubmit}>
+					<span>Изменить пароль</span>
+					<input
+						value={this.state.email}
+						onChange={event => this.setState({ email: event.target.value })}
+						type="email"
+						placeholder="Адрес электропочты"
+					/>
+					<button type="submit">Отправить</button>
+					{ mailSent && <span>Ссылка для смены пароля отправлена на адрес {this.state.email}</span> }
+					{ error && <p>{error.message}</p> }
+				</form>
+			</div>
 		)
 	}
 }
 
-const PasswordForgetLink = () =>
-	<p>
+const PasswordForgetLink = (props) =>
+	<p className={props.className}>
 		<Link to="/pw-forget">Забыли пароль?</Link>
 	</p>
 

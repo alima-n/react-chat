@@ -2,16 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 
-import { PasswordForgetForm } from './PasswordForget'
-import PasswordChangeForm from './PasswordChange'
-import ChangeUserInfoForm from './ChangeUserInfo'
-import withAuthorization from './withAuthorization'
+import { PasswordForgetForm } from '../PasswordForget'
+import PasswordChangeForm from '../PasswordChange'
+import ChangeUserInfoForm from '../ChangeUserInfo'
+import withAuthorization from '../withAuthorization'
+import './style.css'
 
 const AccountPage = ({ authUser }) =>
-    <div>
-		<h4>Вы зачем-то зашли сюда</h4>
-		<PasswordForgetForm />
-		<PasswordChangeForm />
+    <div className="account-block">
+		<h3>Зародыш личного кабинета</h3>
+		<PasswordForgetForm className="pw-forget-form clearfix"/>
 		<hr/>
 		<ChangeUserInfoForm user={authUser}/>
     </div>

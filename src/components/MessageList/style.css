@@ -35,7 +35,7 @@
     margin: 15px 0 30px;
     width: 80%;
     position: relative;
-    background: #94C2ED;
+    background: #5f97cc;
 }
 .message-list__message span > img {
     width: 1.5em !important;
@@ -50,7 +50,7 @@
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-bottom-color: #94C2ED;
+    border-bottom-color: #5f97cc;
     border-width: 10px;
     margin-left: -10px;
 }
@@ -62,12 +62,12 @@
     text-align: right;
 }
 .is-mine .message-list__message{
-    background: #86BB71;
+    background: #6da059;
 }
 
 .is-mine .message-list__message::after{
     left: 93%;
-    border-bottom-color: #86BB71;
+    border-bottom-color: #6da059;
 }
 
 .message-list__time{
@@ -116,7 +116,7 @@ ul{
 
 .message-list__back-to-public{
     cursor: pointer;
-    color: #E38968;
+    color: #e6764d;
 }
 
 .private-message-list__message{
@@ -131,7 +131,6 @@ ul{
     position: relative;
     background: #94C2ED;
 }
-
 .is-mine .private-message-list__message{
     background: #86BB71;
 }

@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
-import * as routes from '../constants/routes'
-import { getValueByProp } from '../utils/'
-import { auth, db } from '../firebase'
+import * as routes from '../../constants/routes'
+import { getValueByProp } from '../../utils'
+import { auth, db } from '../../firebase'
+import './style.css'
 
 
 const SignUpPage = ({ history }) =>
-    <div>
-        <h1>SignUp</h1>
+    <div className="sign-up-block">
+        <h3>Зарегистрироваться</h3>
         <SignUpForm history={history} />
     </div>
 
@@ -67,7 +68,7 @@ class SignUpForm extends Component {
                 error,
         } = this.state
 
-        const isInvalid = passwordOne !== passwordTwo
+        const isInvalid = passwordOne !== passwordTwo || username === '' || email === ''
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -75,32 +76,28 @@ class SignUpForm extends Component {
                     value={username}
                     onChange={event => this.setState(getValueByProp('username', event.target.value))}
                     type="text"
-                    placeholder="Full Name"
-                    required
+                    placeholder="Имя"
                 />
                 <input
                     value={email}
                     onChange={event => this.setState(getValueByProp('email', event.target.value))}
                     type="email"
-                    placeholder="Email Address"
-                    required
+                    placeholder="Электропочта"
                 />
                 <input
                     value={passwordOne}
                     onChange={event => this.setState(getValueByProp('passwordOne', event.target.value))}
                     type="password"
-                    placeholder="Password"
-                    pattern="^[a-zA-Z0-9]{4,}"
-                    required
+                    placeholder="Пароль"
+                    pattern="^[a-zA-Z0-9]{6,}"
                 />
                 <input
                     value={passwordTwo}
                     onChange={event => this.setState(getValueByProp('passwordTwo', event.target.value))}
                     type="password"
-                    placeholder="Confirm Password"
-                    required
+                    placeholder="Подтвердите пароль"
                 />
-                <button type="submit" disabled={isInvalid}>Sign Up</button>
+                <button type="submit" disabled={isInvalid} className="sign-up-btn">Отправить</button>
 
                 { error && <p>{error.message}</p> }
                 
@@ -109,11 +106,11 @@ class SignUpForm extends Component {
     }
 }
 
-const SignUpLink = () =>
-    <p>
-        Don't have an account?
+const SignUpLink = (props) =>
+    <p className={props.className}>
+        Нет аккаунта?
         {' '}
-        <Link to={routes.SIGN_UP}>Sign Up</Link>
+        <Link to={routes.SIGN_UP}>Зарегистрируйтесь</Link>
     </p>
 
 export default withRouter(SignUpPage);

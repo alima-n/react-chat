@@ -4,6 +4,7 @@ import './style.css'
 
 const INITIAL_STATE = {
     file: '',
+    fileName: '',
     photoURL: 'http://dev.nurgazieva.com/loader.svg',
     username: '',
     usernameInput: ''
@@ -30,25 +31,29 @@ class ChangeUserInfoForm extends Component {
 
         return (
             <form onSubmit={this.onSubmit}>
-                <h4>Изменить данные пользователя</h4>
-                <div className="change-userpic"> 
-                    <span>Аватар</span>
+                <div className="change-userpic clearfix"> 
+                    <span>Изменить аватар</span>
                     <img className="change-userpic__userpic" src={this.state.photoURL} alt={user.displayName || user.email} />
-                    <input type="file" onChange={this.handleFileChange} />
+                    <label className="userpic-container">
+                        <input type="file" onChange={this.handleFileChange} />
+                    </label>
+                    {this.state.fileName}
+                    {this.state.file? <button type="submit">Загрузить</button> : null}
                 </div>
-                <div className="change-username"> 
+                <hr/>
+                <div className="change-username clearfix"> 
                     <span>Имя</span>
                     <span>{this.state.username}</span>
                     <input type="text" onChange={this.handleTextChange} placeholder="Новое имя" />
+                    <button type="submit">Изменить</button>
                 </div>
-                <button type="submit">Изменить</button>
             </form>
         )
     }
 
     handleFileChange = event => {
         const {files} = event.target
-        files.length > 0 ? this.setState({ file: files[0] }) : this.setState({ file: '' }) 
+        files.length > 0 ? this.setState({ file: files[0], fileName: files[0].name }) : this.setState({ file: '', fileName: '' }) 
     }
 
     handleTextChange = event => {

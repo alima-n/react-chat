@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 
 import { Message } from '../Message'
 import { checkBottomPos, scrollBottom } from '../../utils/'
-
 
 class PrivateMessageList extends Component {
     
@@ -20,16 +18,15 @@ class PrivateMessageList extends Component {
 	}
 
     render() {
-        const { recipientUsername, privateMessages } = this.props
-        console.log('Private message list: ', this.props)
+        const { recipient, messages } = this.props
       
         return (
             <div className="message-list__wrapper" ref={chat => this.chat = chat} >
-                <h3>Приватная беседа с {recipientUsername}</h3>
+                <h3>Приватная беседа с {recipient}</h3>
                 <span className="message-list__back-to-public"> &#8592; В общий чат </span>
                 <div className="message-list" ref={messages => this.messages = messages}>
                     <ul className="message-list__messages" >	
-                        {privateMessages ? this.getPrivateMessages(privateMessages) : null }      
+                        {messages ? this.getPrivateMessages(messages) : null }      
                     </ul>
                 </div>	
             </div>
@@ -39,19 +36,15 @@ class PrivateMessageList extends Component {
     handleChatClick = (event) => 
         event.target.classList.contains('message-list__back-to-public') ? this.props.onClick() : null
 
-    getPrivateMessages = (privateMessages) => {
+    getPrivateMessages = (messages) => {
 		return (
-			Object.keys(privateMessages).map(key =>
+			Object.keys(messages).map(key =>
 				<li key={key}>
-                    <Message message={privateMessages[key]} user={this.props.user} />
+                    <Message message={messages[key]} user={this.props.user} />
 				</li>
 			)
 		)
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    privateMessages: state.privateMessagesState[ownProps.chatName]
-})
-
-export default connect(mapStateToProps)(PrivateMessageList)
+export default PrivateMessageList

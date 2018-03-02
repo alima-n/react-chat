@@ -67,7 +67,6 @@ class MessageForm extends Component {
 
     handleSubmit = event => {
         const { user: {uid, displayName}, isPrivate, recipient } = this.props
-        console.log('PROPS in send form: ', this.props)
         const dbRef = isPrivate ? db.privateMessagesRef(uid, recipient) : db.messagesRef()
         const time = Date.now()
 

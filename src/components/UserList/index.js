@@ -21,7 +21,7 @@ class UserList extends Component {
 		const {users} = this.props
 
 		if(!users) return null
-		
+		console.log('Rerendering userlist', this.props)
 		return (
 			<div className="user-list__wrapper">
 				<h2>Маленький паноптикум</h2>

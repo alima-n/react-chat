@@ -56,7 +56,7 @@ class PasswordChangeForm extends Component {
 					required
 				/>
 				<button disabled={isInvalid} type="submit">
-					Сбросить текущий пароль
+					Отправить
 				</button>
 
 				{ error && <p>{error.message}</p> }

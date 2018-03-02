@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 
-import { PRIVATE_MESSAGES_SET } from '../../constants/AC'
-import { db } from '../../firebase'
-import * as events from '../../constants/events'
-
 import UserList from '../UserList'
 import MessageList from '../MessageList'
 import PrivateMessageList from '../PrivateMessageList'
 import MessageForm from '../MessageForm'
+import { MESSAGES_SET, PRIVATE_MESSAGES_SET } from '../../constants/AC'
+import { db } from '../../firebase'
+import * as events from '../../constants/events'
+import {getChatName} from '../../utils'
 import withAuthorization from '../withAuthorization'
 import './style.css'
 
@@ -24,18 +24,30 @@ class HomePage extends Component {
 
 	state = { ...INITIAL_STATE }
 
+	componentDidMount() {
+		const { onSetMessages } = this.props
+		Object.keys(events).map(key => db.doAddListenerToRef(db.messagesQuery, events[key], onSetMessages))	 
+	}
+
 	render() {
 		const { authUser } = this.props
-		const { isPrivate } = this.state
-		console.log('HOME props: ', this.props)
+		const { isPrivate, chatName, recipientUsername } = this.state
+
 		return (
 			<div>
 				<div className="home">
-					<UserList user={authUser} onClick={this.handleUserlistClick}/>
+					<UserList user={authUser} onClick={this.handleUserlistClick} chatName={this.state.chatName}/>
 					<div className="chat">
-						{isPrivate ? 
-						<PrivateMessageList user={authUser} {...this.state} onClick={this.handleChatClick} /> : 
-						<MessageList user={authUser} />}
+						{isPrivate ? <PrivateMessageList 
+										user={authUser} 
+										recipient={recipientUsername} 
+										messages={this.props.privateMessages[chatName]} 
+										onClick={this.handleChatClick} 
+									/> : 
+									<MessageList 
+										user={authUser} 
+										messages={this.props.messages} />
+						}
 						<MessageForm user={authUser} {...this.state}/>
 					</div>
 				</div>
@@ -43,13 +55,10 @@ class HomePage extends Component {
 		)
 	}
 
-	getChatName = (uid1, uid2) => {
-		return (uid1 > uid2) ? `${uid1}_${uid2}` : `${uid2}_${uid1}`
-	}
-
 	handleUserlistClick = (recipient, recipientUsername, authUser) => {
-		const chatName = this.getChatName(authUser, recipient)
+		const chatName = getChatName(authUser, recipient)
 		const { onSetPrivateMessages } = this.props
+		
 		Object.keys(events).map(key => 
 			db.doAddListenerToRef(db.privateMessagesQuery(chatName), events[key], onSetPrivateMessages.bind(null, chatName))
 		)
@@ -67,18 +76,24 @@ class HomePage extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
 	authUser: state.sessionState.authUser,
+	messages: state.messagesState.messages,
+	privateMessages: state.privateMessagesState
 })
   
 const authCondition = (authUser) => !!authUser
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+	onSetMessages: (messages) => dispatch({
+		type: MESSAGES_SET,
+		messages 
+	}),
 	onSetPrivateMessages: (chatName, privateMessages) => dispatch({
 		type: PRIVATE_MESSAGES_SET,
         privateMessages,
 		chatName
-    }),
+	}),
 })
 
 export default compose(

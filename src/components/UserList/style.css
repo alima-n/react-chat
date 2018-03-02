@@ -9,7 +9,6 @@
     color: #fff;
     border-radius: 5px 0 0 5px;
 }
-
 .user-list{
     position: absolute;
     left: 30px;
@@ -41,9 +40,6 @@
     margin: 0 10px 10px 0;
 }
 
-.user-list__about{
-
-}
 .user-list__status{
     font-size: .8em;
     font-weight: 200;
@@ -56,9 +52,9 @@
     margin-right: 5px;
 }
 .online{
-    background-color: #86BB71;
+    background-color: #6da059;
 }
 
 .offline{
-    background-color:#E38968
+    background-color:#e6764d
 }
