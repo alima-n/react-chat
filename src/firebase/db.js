@@ -9,15 +9,20 @@ export const doCreateUser = (id, username, email, photoURL) =>
 	})
 
 export const onceGetUsers = () =>
-  	db.ref('users').once('value')
+	  db.ref('users').once('value')
 
-export const doCreateMessage = (ref, uid, text, emoji, time, username, recipient = 'all') => 
+export const getUsername = (uid) => 
+	db.ref(`users/${uid}/username`).once('value').then(snapshot =>
+		snapshot.val()
+	)
+
+export const doCreateMessage = async (ref, uid, text, emoji, time, recipient) => 
 	ref.push({
 		uid,	
 		text,
 		emoji,
 		time,
-		username,
+		username: await getUsername(uid),
 		recipient,
 		read: false
 	})
@@ -34,14 +39,15 @@ export const privateMessagesRef = (uid, recipient) => {
 export const messagesRef = () => 
 	db.ref('messages')
 
-export const doSaveFile = async (ref, uid, fileURI, text, emoji, time, username) => {
+export const doSaveFile = async (ref, uid, fileURI, text, emoji, time, recipient) => {
 	const data = await ref.push({
 		uid,
 		fileURI: '',
 		text,
 		emoji,
 		time,
-		username,
+		username: await getUsername(uid),
+		recipient,
 		read: false
 	})
 

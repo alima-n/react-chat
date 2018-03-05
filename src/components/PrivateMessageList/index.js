@@ -51,6 +51,7 @@ class PrivateMessageList extends Component {
 
     handleChatClick = (event) => 
         event.target.classList.contains('message-list__back-to-public') ? this.props.onClick() : null
+
 }
 
 export default PrivateMessageList

@@ -21,11 +21,9 @@ class User extends Component {
     }
 
     handleUserClick = (event) => {
-        const { user: {id,username} } = this.props
-        this.setState({
-            hasNewMessage: false
-        })
-
+        const { user: {id, username} } = this.props
+        
+        this.setState({ hasNewMessage: false })
         this.props.handleClick(id, username)
     }
 
@@ -57,7 +55,6 @@ class User extends Component {
             </div>
         )
     }
-    
 }
 
 export default User

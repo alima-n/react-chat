@@ -66,13 +66,13 @@ class MessageForm extends Component {
     }
 
     handleSubmit = event => {
-        const { user: {uid, displayName}, isPrivate, recipient } = this.props
+        const { user: {uid}, isPrivate, recipient } = this.props
         const dbRef = isPrivate ? db.privateMessagesRef(uid, recipient) : db.messagesRef()
         const time = Date.now()
 
         this.state.file ? 
-        db.doSaveFile(dbRef, uid, this.state.file, this.state.text, this.state.withEmoji, time, displayName, recipient) :  
-        db.doCreateMessage(dbRef, uid, this.state.text, this.state.withEmoji, time, displayName, recipient)
+        db.doSaveFile(dbRef, uid, this.state.file, this.state.text, this.state.withEmoji, time, recipient) :  
+        db.doCreateMessage(dbRef, uid, this.state.text, this.state.withEmoji, time, recipient)
 
         this.setState({ ...INITIAL_STATE })
         event.preventDefault()

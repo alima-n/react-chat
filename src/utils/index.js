@@ -33,9 +33,9 @@ export const getUserStatusText = (user) => {
         const diff = now - lastVisit
         const dayInMs = 1000*60*60*24
 
-        if (diff < dayInMs) return `Отсутствует с ${hours}:${minutes < 10 ? '0' + minutes : minutes}`
+        if (diff < dayInMs) return `Отсутствует с ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`
         
-        if (diff > dayInMs && diff < dayInMs*2) return `Вчера видели в ${hours}:${minutes < 10 ? '0' + minutes : minutes}`
+        if (diff > dayInMs && diff < dayInMs*2) return `Вчера видели в ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`
         
         if (diff > dayInMs*2) return `Не слышно с ${date < 10 ? '0' + date : date}.${month < 10 ? '0'+ month : month}.${year.toString().slice(-2)}`
     }

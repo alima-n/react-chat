@@ -7,10 +7,10 @@ import { getTime } from '../utils'
 export const Message = (props) => {
 
     const { message, user } = props
-
+    
     const getClassName = uid => 
         uid === user.uid ? 'is-mine' : null
-
+        
     return (
         <div className={getClassName(message.uid)}>
             <div>

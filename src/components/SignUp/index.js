@@ -88,7 +88,7 @@ class SignUpForm extends Component {
                     value={passwordOne}
                     onChange={event => this.setState(getValueByProp('passwordOne', event.target.value))}
                     type="password"
-                    placeholder="Пароль"
+                    placeholder="Пароль (min 6 символов)"
                     pattern="^[a-zA-Z0-9]{6,}"
                 />
                 <input

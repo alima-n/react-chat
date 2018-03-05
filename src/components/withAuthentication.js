@@ -15,10 +15,7 @@ const withAuthentication = (Component) => {
                     onSetAuthUser(authUser)
                     db.manageUserPresence(authUser.uid)
 
-                } else {
-                    onSetAuthUser(null)  
-                }
-                         
+                }                         
             })
         }
 
